@@ -12,26 +12,39 @@ templates to use these resources to create an AMI.
 You must have Packer installed, see
 [the official instructions](https://developer.hashicorp.com/packer/downloads).
 
-To build an AMI clone this repository, and then run the following commands
-in the root of the cloned repository:
+The template has a single mandatory argument, `kubernetes_version`, which
+is used to control the Amazon EKS optimized Amazon Linux 2 base AMI that
+is used to generate the image and also as a tag on the produced image.
+
+To build an AMI:
+  1. Clone this repository
+  2. Initialize Packer
+  3. Run the Packer build with the Packer template.
+
+This can be done by running the following commands from the base of the of
+the cloned repository:
 
 ```
 packer init .
-packer build amazon-ebs.pkr.hcl
+packer build -var kubernetes_version=1.27 amazon-ebs.pkr.hcl
 ```
 
-To build an AMI for a particular EKS Kubernetes version,
-set the `version` variable, e.g. to build for v1.25 run:
+The source AMI can be overridden by specifying the `source_ami_id` variable,
+e.g.:
 
 ```
-packer build --var version=1.25 amazon-ebs.pkr.hcl
+packer build \
+  -var kubernetes_version=1.26 \
+  -var source_ami_id=ami-0f114867066b78822
 ```
 
 Arbitrary additional tags can be added to the AMI by specifying a JSON
 map of tags as the `tags` variable, e.g.:
 
 ```
-packer build --var 'tags={"mykey": "myvalue", "myotherkey": "myothervalue"}'
+packer build \
+  -var kubernetes_version=1.25 \
+  -var 'tags={"mykey": "myvalue", "myotherkey": "myothervalue"}'
 ```
 
 ## Using AMIs

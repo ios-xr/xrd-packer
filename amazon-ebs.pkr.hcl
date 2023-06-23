@@ -7,16 +7,15 @@ packer {
   }
 }
 
+variable "kubernetes_version" {
+  type        = string
+  description = "Kubernetes version"
+}
+
 variable "source_ami_id" {
   type        = string
   default     = null
-  description = "(Optional) source AMI to use as a base"
-}
-
-variable "version" {
-  type        = string
-  default     = "1.26"
-  description = "EKS Cluster Kubernetes version"
+  description = "(Optional) Source AMI to use as a base"
 }
 
 variable "tags" {
@@ -28,14 +27,14 @@ variable "tags" {
 locals {
   default_tags = {
     Generated_By       = "xrd-packer"
-    Kubernetes_Version = var.version
+    Kubernetes_Version = var.kubernetes_version
     Base_AMI_ID        = "{{ .SourceAMI }}"
     Base_AMI_Name      = "{{ .SourceAMIName }}"
   }
 }
 
 source "amazon-ebs" "base" {
-  ami_name      = format("xrd-%s-{{timestamp}}", var.version)
+  ami_name      = format("xrd-%s-{{timestamp}}", var.kubernetes_version)
   instance_type = "m5.xlarge"
   ssh_username  = "ec2-user"
 
@@ -46,7 +45,7 @@ source "amazon-ebs" "base" {
     owners      = ["amazon"]
 
     filters = {
-      name                = format("amazon-eks-node-%s-*", var.version)
+      name                = format("amazon-eks-node-%s-*", var.kubernetes_version)
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
