@@ -34,7 +34,7 @@ e.g.:
 
 ```
 packer build \
-  -var kubernetes_version=1.27 \
+  -var kubernetes_version=1.28 \
   -var source_ami_id=ami-0f114867066b78822
 ```
 
@@ -43,7 +43,7 @@ map of tags as the `tags` variable, e.g.:
 
 ```
 packer build \
-  -var kubernetes_version=1.27 \
+  -var kubernetes_version=1.28 \
   -var 'tags={"mykey": "myvalue", "myotherkey": "myothervalue"}'
 ```
 
