@@ -26,7 +26,7 @@ the cloned repository:
 
 ```
 packer init .
-packer build -var kubernetes_version=1.29 amazon-ebs.pkr.hcl
+packer build -var kubernetes_version=1.30 amazon-ebs.pkr.hcl
 ```
 
 The source AMI can be overridden by specifying the `source_ami_id` variable,
@@ -34,7 +34,7 @@ e.g.:
 
 ```
 packer build \
-  -var kubernetes_version=1.29 \
+  -var kubernetes_version=1.30 \
   -var source_ami_id=ami-0f114867066b78822
 ```
 
@@ -43,7 +43,7 @@ map of tags as the `tags` variable, e.g.:
 
 ```
 packer build \
-  -var kubernetes_version=1.29 \
+  -var kubernetes_version=1.30 \
   -var 'tags={"mykey": "myvalue", "myotherkey": "myothervalue"}'
 ```
 
