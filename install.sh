@@ -18,7 +18,6 @@ rm -rf igb_uio
 # version available there.
 yum install -y \
     dbus \
-    dbus-python \
     ethtool \
     gawk \
     polkit \
@@ -28,16 +27,14 @@ yum install -y \
     python-linux-procfs \
     python-perf \
     python-pyudev \
-    python-schedutils \
-    tuna \
     util-linux \
     virt-what
 
 mkdir tuned
-curl -L https://github.com/redhat-performance/tuned/archive/refs/tags/v2.20.0.tar.gz | tar -xz -C tuned --strip-components 1
+curl -L https://github.com/redhat-performance/tuned/archive/refs/tags/v2.24.1.tar.gz | tar -xz -C tuned --strip-components 1
 # N.B. The 'desktop-file-install' action is expected to fail. This doesn't
 # affect the installation of the tuned service.
-make -C tuned PYTHON=/usr/bin/python2 install
+make -C tuned install
 rm -rf tuned
 
 # Set up the sysctls.
