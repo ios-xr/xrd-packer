@@ -13,9 +13,8 @@ cp igb_uio/linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio
 depmod "$(uname -r)"
 rm -rf igb_uio
 
-# Download a much newer version of TuneD that available from the
-# Amazon Linux 2 repositories. This fixes several issues with the old
-# version available there.
+# TuneD is not available in the Amazon Linux 2023 repository, so download our
+# own version instead.
 dnf install -y \
     dbus \
     ethtool \
