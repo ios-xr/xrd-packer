@@ -77,7 +77,7 @@ multi-part user-data is:
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="BOUNDARY"
 
-<Other MIME sections, including NodeConfig>
+<Other MIME sections, including for NodeConfig>
 
 --BOUNDARY
 Content-Type: text/x-shellscript; charset="us-ascii"
