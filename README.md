@@ -47,6 +47,11 @@ packer build \
   -var 'tags={"mykey": "myvalue", "myotherkey": "myothervalue"}'
 ```
 
+Note that when building the AMI, the following warnings are expected and can be ignored:
+
+* When building the igb_uio driver, a warning for 'Skipping BTF generation' is expected. This doesn't affect the performance of the built driver.
+* When building TuneD, the 'desktop-file-install' action is expected to fail. This doesn't affect the installation of the tuned service.
+
 ## Using AMIs
 
 The AMIs produced by the template here require further configuration
@@ -70,7 +75,7 @@ Additionally, to ensure the worker node joins an EKS cluster, the normal
 EKS bootstrap script must be called.
 
 It's recommended to set this up in the User Data for the EC2 instance
-to ensure it's run on first boot. An example section fo this in a MIME
+to ensure it's run on first boot. An example section containing this in a MIME
 multi-part user-data is:
 
 ```bash
@@ -102,3 +107,5 @@ tuning steps:
   - Build, install, and activate the `igb_uio` interface driver kernel module.
   - Set up recommended core handling behavior.
   - Set up hugepage handling for systems with more than one NUMA node.
+
+Note that the TuneD bootloader plugin does not work in Amazon Linux 2023. The packer template matches the cmdline arguments set by the `realtime-virtual-guest` TuneD profile, in addition to the `default_hugepagesz`, `hugepagesz` and `hugepages` arguments.

@@ -26,10 +26,10 @@ variable "tags" {
 
 locals {
   default_tags = {
-    Generated_By         = "xrd-packer"
-    Kubernetes_Version   = var.kubernetes_version
-    Base_AMI_ID          = "{{ .SourceAMI }}"
-    Base_AMI_Name        = "{{ .SourceAMIName }}"
+    Generated_By       = "xrd-packer"
+    Kubernetes_Version = var.kubernetes_version
+    Base_AMI_ID        = "{{ .SourceAMI }}"
+    Base_AMI_Name      = "{{ .SourceAMIName }}"
   }
 }
 
@@ -45,7 +45,10 @@ source "amazon-ebs" "base" {
     owners      = ["amazon"]
 
     filters = {
-      name                = format("amazon-eks-node-al2023-x86_64-standard-%s-*", var.kubernetes_version)
+      name                = format(
+        "amazon-eks-node-al2023-x86_64-standard-%s-*",
+        var.kubernetes_version
+      )
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
