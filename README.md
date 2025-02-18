@@ -13,7 +13,7 @@ You must have Packer installed, see
 [the official instructions](https://developer.hashicorp.com/packer/downloads).
 
 The template has a single mandatory argument, `kubernetes_version`, which
-is used to control the Amazon EKS optimized Amazon Linux 2023 base AMI that
+is used to control the Amazon EKS optimized Amazon Linux 2 base AMI that
 is used to generate the image and also as a tag on the produced image.
 
 To build an AMI:
@@ -70,23 +70,13 @@ Additionally, to ensure the worker node joins an EKS cluster, the normal
 EKS bootstrap script must be called.
 
 It's recommended to set this up in the User Data for the EC2 instance
-to ensure it's run on first boot. An example section fo this in a MIME
-multi-part user-data is:
+to ensure it's run on first boot. An example user data for this is:
 
 ```bash
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="BOUNDARY"
-
-<Other MIME sections, including NodeConfig>
-
---BOUNDARY
-Content-Type: text/x-shellscript; charset="us-ascii"
-
-#!/bin/bash
+#!/usr/bin/env bash
 HUGEPAGES_GB=6 ISOLATED_CORES=16-23 /etc/xrd/bootstrap.sh
+/etc/eks/bootstrap.sh my-cluster-name
 reboot
-
---BOUNDARY--
 ```
 
 ## Image Tuning
@@ -98,7 +88,6 @@ The Packer template uses resources in this repository to run the following
 tuning steps:
   - Install the [TuneD](https://github.com/redhat-performance/tuned) tool.
   - Install an XRd TuneD profile, and run it.
-  - Set up recommended boot cmdline arguments
   - Build, install, and activate the `igb_uio` interface driver kernel module.
   - Set up recommended core handling behavior.
   - Set up hugepage handling for systems with more than one NUMA node.
