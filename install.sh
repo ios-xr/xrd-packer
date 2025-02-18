@@ -4,9 +4,7 @@
 set -x
 
 # Download and build the igb_uio driver, and load it into the kernel.
-dnf install -y \
-    "kernel-devel-$(uname -r)" \
-    dwarves
+yum install -y "kernel-devel-$(uname -r)"
 
 mkdir igb_uio
 curl https://git.dpdk.org/dpdk-kmods/snapshot/dpdk-kmods-e721c733cd24206399bebb8f0751b0387c4c1595.tar.gz | tar -xz -C igb_uio --strip-components 1
@@ -18,7 +16,7 @@ rm -rf igb_uio
 # Download a much newer version of TuneD that available from the
 # Amazon Linux 2 repositories. This fixes several issues with the old
 # version available there.
-dnf install -y \
+yum install -y \
     dbus \
     ethtool \
     gawk \
