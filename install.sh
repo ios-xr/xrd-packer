@@ -4,8 +4,6 @@
 set -x
 
 # Download and build the igb_uio driver, and load it into the kernel.
-# N.B. A warning por 'Skipping BTF generation' is expected. This doesn't affect
-# the performance of the built driver.
 dnf install -y "kernel-devel-$(uname -r)"
 
 mkdir igb_uio
