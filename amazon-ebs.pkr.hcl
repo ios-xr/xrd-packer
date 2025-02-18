@@ -30,6 +30,7 @@ locals {
     Kubernetes_Version   = var.kubernetes_version
     Base_AMI_ID          = "{{ .SourceAMI }}"
     Base_AMI_Name        = "{{ .SourceAMIName }}"
+    Amazon_Linux_Version = "AL2023"
   }
 }
 
