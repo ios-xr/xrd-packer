@@ -109,9 +109,3 @@ tuning steps:
   - Set up hugepage handling for systems with more than one NUMA node.
 
 Note that the TuneD bootloader plugin does not work in Amazon Linux 2023. The packer template matches the cmdline arguments set by the `realtime-virtual-guest` TuneD profile, in addition to the `default_hugepagesz`, `hugepagesz` and `hugepages` arguments.
-
-## Amazon Linux 2
-
-Amazon Linux 2 is EOL.
-
-To create AMIs for AL2, see the AL2 tagged version of XRd Packer.
