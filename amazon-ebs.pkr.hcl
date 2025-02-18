@@ -26,11 +26,10 @@ variable "tags" {
 
 locals {
   default_tags = {
-    Generated_By         = "xrd-packer"
-    Kubernetes_Version   = var.kubernetes_version
-    Base_AMI_ID          = "{{ .SourceAMI }}"
-    Base_AMI_Name        = "{{ .SourceAMIName }}"
-    Amazon_Linux_Version = "AL2023"
+    Generated_By       = "xrd-packer"
+    Kubernetes_Version = var.kubernetes_version
+    Base_AMI_ID        = "{{ .SourceAMI }}"
+    Base_AMI_Name      = "{{ .SourceAMIName }}"
   }
 }
 
