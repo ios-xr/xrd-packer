@@ -45,10 +45,7 @@ source "amazon-ebs" "base" {
     owners      = ["amazon"]
 
     filters = {
-      name                = format(
-        "amazon-eks-node-al2023-x86_64-standard-%s-*",
-        var.kubernetes_version
-      )
+      name                = format("amazon-eks-node-%s-*", var.kubernetes_version)
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
