@@ -36,8 +36,6 @@ function compress_to_range() {
         else
             if [ $start -eq $end ]; then
                 range_str+="$start,"
-            elif [ $((start + 1)) -eq $end ]; then
-                range_str+="$start,$end,"
             else
                 range_str+="$start-$end,"
             fi
@@ -48,8 +46,6 @@ function compress_to_range() {
 
     if [ $start -eq $end ]; then
         range_str+="$start"
-    elif [ $((start + 1)) -eq $end ]; then
-        range_str+="$start,$end,"
     else
         range_str+="$start-$end"
     fi
