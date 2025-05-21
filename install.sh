@@ -11,9 +11,12 @@ dnf install -y \
 # N.B. A warning for 'Skipping BTF generation' is expected. This doesn't affect
 # the performance of the built driver.
 git clone git://dpdk.org/dpdk-kmods
-make -C dpdk-kmods/linux/igb_uio
+cd dpdk-kmods
+git checkout e721c733cd24206399bebb8f0751b0387c4c1595
+make -C linux/igb_uio
 cp dpdk-kmods/linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio"
 depmod "$(uname -r)"
+cd ../
 rm -rf dpdk-kmods
 
 # TuneD is not available in the Amazon Linux 2023 repository, so download our
