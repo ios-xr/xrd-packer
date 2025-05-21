@@ -12,9 +12,9 @@ dnf install -y \
 # the performance of the built driver.
 git clone git://dpdk.org/dpdk-kmods
 cd dpdk-kmods
-git checkout e721c733cd24206399bebb8f0751b0387c4c1595
+git switch e721c733cd24206399bebb8f0751b0387c4c1595 --detach
 make -C linux/igb_uio
-cp dpdk-kmods/linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio"
+cp linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio"
 depmod "$(uname -r)"
 cd ../
 rm -rf dpdk-kmods
