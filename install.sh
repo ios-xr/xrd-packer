@@ -3,15 +3,18 @@
 
 set -ex
 
-# Download and build the igb_uio driver, and load it into the kernel.
 yum install -y \
     "kernel-devel-$(uname -r)" \
     git
 
+# Download and build the igb_uio driver, and load it into the kernel.
 git clone git://dpdk.org/dpdk-kmods
+cd dpdk-kmods
+git checkout e721c733cd24206399bebb8f0751b0387c4c1595
 make -C dpdk-kmods/linux/igb_uio
 cp dpdk-kmods/linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio"
 depmod "$(uname -r)"
+cd ../
 rm -rf dpdk-kmods
 
 # Download a much newer version of TuneD that available from the
