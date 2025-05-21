@@ -38,7 +38,9 @@ mkdir tuned
 curl -L https://github.com/redhat-performance/tuned/archive/refs/tags/v2.20.0.tar.gz | tar -xz -C tuned --strip-components 1
 # N.B. The 'desktop-file-install' action is expected to fail. This doesn't
 # affect the installation of the tuned service.
-make -C tuned PYTHON=/usr/bin/python2 install
+if ! make -C tuned PYTHON=/usr/bin/python2 install; then
+    echo "desktop-file-install failure is expected. Continuing with installation..."
+fi
 rm -rf tuned
 
 # Set up the sysctls.
