@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 # This script must be run as the root user.
 
-set -x
+set -ex
+
+dnf install -y \
+    "kernel-devel-$(uname -r)" \
+    git
 
 # Download and build the igb_uio driver, and load it into the kernel.
 # N.B. A warning for 'Skipping BTF generation' is expected. This doesn't affect
 # the performance of the built driver.
-dnf install -y "kernel-devel-$(uname -r)"
-
-mkdir igb_uio
-curl https://git.dpdk.org/dpdk-kmods/snapshot/dpdk-kmods-e721c733cd24206399bebb8f0751b0387c4c1595.tar.gz | tar -xz -C igb_uio --strip-components 1
-make -C igb_uio/linux/igb_uio
-cp igb_uio/linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio"
+git clone git://dpdk.org/dpdk-kmods
+make -C dpdk-kmods/linux/igb_uio
+cp dpdk-kmods/linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio"
 depmod "$(uname -r)"
-rm -rf igb_uio
+rm -rf dpdk-kmods
 
 # TuneD is not available in the Amazon Linux 2023 repository, so download our
 # own version instead.
@@ -35,7 +36,9 @@ mkdir tuned
 curl -L https://github.com/redhat-performance/tuned/archive/refs/tags/v2.24.1.tar.gz | tar -xz -C tuned --strip-components 1
 # N.B. The 'desktop-file-install' action is expected to fail. This doesn't
 # affect the installation of the tuned service.
-make -C tuned install
+if ! make -C tuned install; then
+    echo "desktop-file-install failure is expected. Continuing with installation..."
+fi
 rm -rf tuned
 
 # Set up the sysctls.
