@@ -35,7 +35,8 @@ e.g.:
 ```
 packer build \
   -var kubernetes_version=1.32 \
-  -var source_ami_id=ami-0f114867066b78822
+  -var source_ami_id=ami-0f114867066b78822 \
+  amazon-ebs.pkr.hcl
 ```
 
 Arbitrary additional tags can be added to the AMI by specifying a JSON
@@ -44,7 +45,8 @@ map of tags as the `tags` variable, e.g.:
 ```
 packer build \
   -var kubernetes_version=1.32 \
-  -var 'tags={"mykey": "myvalue", "myotherkey": "myothervalue"}'
+  -var 'tags={"mykey": "myvalue", "myotherkey": "myothervalue"}' \
+  amazon-ebs.pkr.hcl
 ```
 
 ## Using AMIs

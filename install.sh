@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 # This script must be run as the root user.
 
-set -x
+set -ex
+
+yum install -y \
+    "kernel-devel-$(uname -r)" \
+    git
 
 # Download and build the igb_uio driver, and load it into the kernel.
-yum install -y "kernel-devel-$(uname -r)"
-
-mkdir igb_uio
-curl https://git.dpdk.org/dpdk-kmods/snapshot/dpdk-kmods-e721c733cd24206399bebb8f0751b0387c4c1595.tar.gz | tar -xz -C igb_uio --strip-components 1
-make -C igb_uio/linux/igb_uio
-cp igb_uio/linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio"
+git clone git://dpdk.org/dpdk-kmods
+cd dpdk-kmods
+git switch e721c733cd24206399bebb8f0751b0387c4c1595 --detach
+make -C linux/igb_uio
+cp linux/igb_uio/igb_uio.ko "/lib/modules/$(uname -r)/kernel/drivers/uio"
 depmod "$(uname -r)"
-rm -rf igb_uio
+cd ../
+rm -rf dpdk-kmods
 
 # Download a much newer version of TuneD that available from the
 # Amazon Linux 2 repositories. This fixes several issues with the old
@@ -37,7 +41,9 @@ mkdir tuned
 curl -L https://github.com/redhat-performance/tuned/archive/refs/tags/v2.20.0.tar.gz | tar -xz -C tuned --strip-components 1
 # N.B. The 'desktop-file-install' action is expected to fail. This doesn't
 # affect the installation of the tuned service.
-make -C tuned PYTHON=/usr/bin/python2 install
+if ! make -C tuned PYTHON=/usr/bin/python2 install; then
+    echo "desktop-file-install failure is expected. Continuing with installation..."
+fi
 rm -rf tuned
 
 # Set up the sysctls.
