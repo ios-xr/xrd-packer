@@ -116,4 +116,4 @@ Note that the TuneD bootloader plugin does not work in Amazon Linux 2023. The pa
 
 Amazon Linux 2 is EOL.
 
-To create AMIs for AL2, see the AL2 tagged version of XRd Packer.
+To create AMIs for AL2, check out the Amazon_Linux_2_version branch of the xrd-packer repository.
