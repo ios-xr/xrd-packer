@@ -93,3 +93,7 @@ tuning steps:
   - Build, install, and activate the `igb_uio` interface driver kernel module.
   - Set up recommended core handling behavior.
   - Set up hugepage handling for systems with more than one NUMA node.
+
+# Amazon Linux 2023
+
+To create AMIs for the latest version of Amazon Linux, AL2023, check out the main branch of the xrd-packer repository.
