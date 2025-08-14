@@ -4,9 +4,10 @@
 set -ex
 
 # Use the dnf repoquery whatprovides command to obtain the name of the relevant
-# kernel-devel package. This is usually of the form "kernel-devel-$(uname -r)"
-# (Kubernetes version <=1.32), but has been known to change to
-# "kernel<truncated uname>-devel-$(uname -r)" (Kubernetes version = 1.33).
+# kernel-devel package (which always provides the tag 'kernel-devel-uname-r').
+# This is usually of the form "kernel-devel-$(uname -r)" (Kubernetes version
+# <=1.32), but has been known to change to "kernel<truncated
+# uname>-devel-$(uname -r)" (Kubernetes version = 1.33).
 devel_pkg=$(dnf repoquery --whatprovides "kernel-devel-uname-r = $(uname -r)")
 
 dnf install -y \
