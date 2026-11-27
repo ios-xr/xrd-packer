@@ -44,7 +44,7 @@ map of tags as the `tags` variable, e.g.:
 
 ```
 packer build \
-  -var kubernetes_version=1.36 \
+  -var kubernetes_version=1.37 \
   -var 'tags={"mykey": "myvalue", "myotherkey": "myothervalue"}' \
   amazon-ebs.pkr.hcl
 ```
