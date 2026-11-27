@@ -26,7 +26,7 @@ the cloned repository:
 
 ```
 packer init .
-packer build -var kubernetes_version=1.36 amazon-ebs.pkr.hcl
+packer build -var kubernetes_version=1.37 amazon-ebs.pkr.hcl
 ```
 
 The source AMI can be overridden by specifying the `source_ami_id` variable,
