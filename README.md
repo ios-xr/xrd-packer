@@ -34,7 +34,7 @@ e.g.:
 
 ```
 packer build \
-  -var kubernetes_version=1.36 \
+  -var kubernetes_version=1.37 \
   -var source_ami_id=ami-0f114867066b78822 \
   amazon-ebs.pkr.hcl
 ```
